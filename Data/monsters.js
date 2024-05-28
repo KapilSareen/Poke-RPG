@@ -6,7 +6,7 @@ const monsters={
             y:360
         },
         image:{
-            src:'https://github.com/KapilSareen/Poke-RPG/assets/embySprite.png'
+            src:'./assets/embySprite.png'
         },
         frames:{
             max:4,
@@ -22,7 +22,7 @@ const monsters={
             y:180
         },
         image:{
-            src:'https://github.com/KapilSareen/Poke-RPG/assets/draggleSprite.png'
+            src:'./assets/draggleSprite.png'
         },
         frames:{
             max:4,

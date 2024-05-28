@@ -1,16 +1,16 @@
-audio = {
+const audio = {
     Map: new Howl({
-      src: 'https://github.com/KapilSareen/Poke-RPG/audio/map.wav',
+      src: '../audio/map.wav',
       html5: true,
       volume: 0.1
     }),
     initBattle: new Howl({
-      src: 'https://github.com/KapilSareen/Poke-RPG/audio/initBattle.wav',
+      src: '../audio/initBattle.wav',
       html5: true,
       volume: 0.1
     }),
     battle: new Howl({
-      src: 'https://github.com/KapilSareen/Poke-RPG/audio/battle.mp3',
+      src: '../audio/battle.mp3',
       html5: true,
       volume: 0.1
     })
