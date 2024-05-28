@@ -1,6 +1,6 @@
 
 const battlebg = new Image()
-battlebg.src = './assets/bg1.jpg'
+battlebg.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/bg1.jpg'
 
 
 const battleBackground = new Sprite({

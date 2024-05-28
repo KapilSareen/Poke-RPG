@@ -79,22 +79,22 @@ battlezonesMap.forEach((row, i) => {
 // console.log(battlezones)
 
 const image = new Image()
-image.src = './assets/map.png'
+image.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/map.png'
 
 
 const playerImage = new Image()
-playerImage.src = './assets/playerDown.png'
+playerImage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/playerDown.png'
 
 const foregroundimage = new Image()
-foregroundimage.src = './assets/foreground.png'
+foregroundimage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/foreground.png'
 
 
 const playerUpImage = new Image()
-playerUpImage.src = './assets/playerUp.png'
+playerUpImage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/playerUp.png'
 const playerLeftImage = new Image()
-playerLeftImage.src = './assets/playerLeft.png'
+playerLeftImage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/playerLeft.png'
 const playerRightImage = new Image()
-playerRightImage.src = './assets/playerRight.png'
+playerRightImage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/playerRight.png'
 
 
 
