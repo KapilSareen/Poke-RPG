@@ -79,22 +79,22 @@ battlezonesMap.forEach((row, i) => {
 // console.log(battlezones)
 
 const image = new Image()
-image.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/map.png'
+image.src = 'https://github.com/KapilSareen/Poke-RPG/assets/map.png'
 
 
 const playerImage = new Image()
-playerImage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/playerDown.png'
+playerImage.src = 'https://github.com/KapilSareen/Poke-RPG/assets/playerDown.png'
 
 const foregroundimage = new Image()
-foregroundimage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/foreground.png'
+foregroundimage.src = 'https://github.com/KapilSareen/Poke-RPG/assets/foreground.png'
 
 
 const playerUpImage = new Image()
-playerUpImage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/playerUp.png'
+playerUpImage.src = 'https://github.com/KapilSareen/Poke-RPG/assets/playerUp.png'
 const playerLeftImage = new Image()
-playerLeftImage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/playerLeft.png'
+playerLeftImage.src = 'https://github.com/KapilSareen/Poke-RPG/assets/playerLeft.png'
 const playerRightImage = new Image()
-playerRightImage.src = 'https://github.com/KapilSareen/Poke-RPG/blob/main/assets/playerRight.png'
+playerRightImage.src = 'https://github.com/KapilSareen/Poke-RPG/assets/playerRight.png'
 
 
 
