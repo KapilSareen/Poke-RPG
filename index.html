@@ -34,7 +34,7 @@
     }
 </style>
 
-<canvas></canvas>
+<canvas id="pokemonCanvas"></canvas>
 <div>
     <div id="overlappingDiv"
         style="background-color: black;position: absolute; width: 1120px;height: 850px; opacity: 0 ; pointer-events: none; z-index: 10;top: 0;bottom: 0;left: 400px;">
@@ -42,7 +42,7 @@
 
     <div class="ui"
         style="background-color: #ffffff;padding:5px;width: 350px; position: absolute; top: 200px; left: 430px; border: 4px solid;">
-        <h1>Draggle</h1>
+        <h1 id="enemyPokemonName"></h1>
         <div style="position: relative;">
             <div style="height: 5px;background-color: rgb(194, 184, 184);"></div>
             <div id="enemyHealth"
@@ -56,7 +56,7 @@
 
 <div class="ui"
     style="background-color: #ffffff;padding:5px;width: 400px; position: absolute; top: 500px; right: 430px;border: 4px solid;">
-    <h1>Emby</h1>
+    <h1 id="myPokemonName"></h1>
     <div style="position: relative;">
         <div style="height: 5px;background-color: rgb(194, 184, 184);"></div>
         <div id="myHealth"
@@ -73,7 +73,7 @@
     <div style="display: flex; width: 100%;height: 100%;">
 
         <div id="attacksBox" class="attacks"
-            style="width: 65%; background-color: red; height: 100%; display: flex; justify-content: center ;align-items: center; border-right: 3px solid;">
+            style="width: 65%;  height: 100%; display: flex; justify-content: center ;align-items: center; border-right: 3px solid;">
 
         </div>
         <div class="type" style="width:35%; height: 100%;display: flex; justify-content: center;align-items: center;">
@@ -81,7 +81,8 @@
         </div>
     </div>
 </div>
-
+<script src="https://unpkg.com/konva@9.3.11/konva.min.js"></script>
+<script src="https://unpkg.com/gifler@0.1.0/gifler.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
     integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -91,7 +92,6 @@
 <script src="Data/audio.js"></script>
 <script src="./Data/attacks.js"></script>
 <script src="class.js"></script>
-<script src="./Data/monsters.js"></script>
 <script src="./Data/battleZone.js"></script>
 <script src="./Data/collisions.js"></script>
 <script src="index.js"></script>

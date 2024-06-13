@@ -1,3 +1,4 @@
+
 class Boundary {
     static width = 4.24 * 16
     static height = 4.24 * 16
@@ -68,9 +69,9 @@ class Sprite {
 class Monster extends Sprite {
 
     constructor({
-        isEnemy=false,name,position, velocity, image, frames = { max: 1, hold:10 }, sprites,attacks}){
+        isEnemy=false,name,position, velocity, image, frames = { max: 1, hold:10 }, sprites,attacks,health=100}){
        super({position, velocity, image, frames , sprites})
-            this.health=100
+            this.health=health
             this.isEnemy=isEnemy
             this.name=name
             this.attacks=attacks
@@ -84,9 +85,37 @@ class Monster extends Sprite {
             this.moving = false
     
         }
+        draw() {
+            c.save()
+            c.globalAlpha=this.opacity
+            c.drawImage(
+                this.image,
+                this.frames.val * this.width,
+                0,
+                this.image.width / this.frames.max,
+                this.image.height,
+                this.position.x,
+                this.position.y,
+                this.image.width*1.65,
+                this.image.height*1.65
+            )
+            c.restore()
+            if (this.frames.max > 1) {
+                this.frames.elapsed++
+            }
+    
+            if (!this.moving) return
+            if (this.frames.elapsed % this.frames.hold == 0)
+                if (this.frames.val < this.frames.max - 1){
+    
+                    this.frames.val++
+                    // console.log(this.frames.elapsed)
+                }
+                else this.frames.val = 0
+        }
     faint(){
         document.querySelector('#dialogueBox').style.display='block'
-        document.querySelector('#dialogueBox').innerHTML= this.name +' fained!'
+        document.querySelector('#dialogueBox').innerHTML= this.name +' fainted!'
         gsap.to(this.position,{
             y:this.position.y+20
         })
@@ -94,6 +123,7 @@ class Monster extends Sprite {
             opacity:0
         })
     }
+    
     attack({ attack, recipient }) {
 
         document.querySelector('#dialogueBox').style.display='block'
