@@ -12,33 +12,7 @@ const battleBackground = new Sprite({
 
 let enemyPokemon;
 let myPokemon;
-async function getPokemon(num) {
-    let a = await fetch('https://graphqlpokemon.favware.tech/v8', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            query: `
-    {
-        getPokemonByDexNumber(number: ${num}) {
-            species
-            sprite
-            backSprite
-            baseStats {
-                attack
-                defense
-                hp
-                specialattack
-                specialdefense
-                speed
-            }}}`
-        })
-    });
-    let json = await a.json();
-    let pokemone = json.data.getPokemonByDexNumber;
-    return pokemone;
-}
+
 
 let enemy;
 let myPoke;
@@ -67,13 +41,11 @@ async function getMoves(pokemonObject, n) {
 
 
 async function initBattle() {
+    myPokemon= mypokemons[0]
     enemyPokemon = await getPokemon(Math.floor(Math.random() * 50 + 50));
-    myPokemon = await getPokemon(25);
-
     myMoves = await getMoves(myPokemon, 4);
     enemyMoves = await getMoves(enemyPokemon, 4);
     // console.log(enemyMoves)
-
     let enemyname = document.querySelector('#enemyPokemonName');
     enemyname.innerText = `${enemyPokemon.species}`;
 
@@ -154,7 +126,8 @@ async function initBattle() {
                             battle.initiated = false;
                             audio.battle.stop();
                             audio.initBattle.stop();
-                            audio.Map.play();
+                            // audio.Map.play();
+                            showCatchModal();
                         }
                     });
                 });
@@ -197,7 +170,6 @@ async function initBattle() {
 
         button.addEventListener('mouseenter', (e) => {
             const selectedattack = myMoves[e.currentTarget.innerHTML];
-            console.log(selectedattack)
             document.querySelector('#AttackType').innerHTML = selectedattack.type;
         });
     });
@@ -218,7 +190,6 @@ function animateBattle() {
 const dialogueBox = document.querySelector('#dialogueBox');
 if (dialogueBox) {
     dialogueBox.addEventListener('click', (e) => {
-            console.log('clicked');
             if (queue.length > 0) {
                 queue[0]();
                 queue.shift();
@@ -226,6 +197,80 @@ if (dialogueBox) {
                 e.currentTarget.style.display = 'none';
             }
         });
+    }
+    function showCatchModal() {
+        const modal = document.createElement('div');
+        Object.assign(modal.style, {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'fixed',
+            zIndex: '1',
+            left: '0',
+            top: '0',
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        });
+    
+        const modalContent = document.createElement('div');
+        Object.assign(modalContent.style, {
+            backgroundColor: '#fff',
+            padding: '20px',
+            border: '1px solid #888',
+            width: '80%',
+            maxWidth: '400px',
+            textAlign: 'center',
+        });
+    
+        const modalText = document.createElement('p');
+        modalText.textContent = 'Do you want to catch the fainted Pokémon?';
+        modalText.style.marginBottom = '20px';
+        modalContent.appendChild(modalText);
+    
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.justifyContent = 'center';
+    
+        const catchButton = createButton('Catch', () => {
+            console.log('Pokémon caught!');
+            mypokemons.push(enemyPokemon)
+            console.log(mypokemons)
+            closeModal(modal);
+        });
+        buttonContainer.appendChild(catchButton);
+    
+        const leaveButton = createButton('Leave', () => {
+            console.log('Pokémon left!');
+            closeModal(modal);
+        });
+        buttonContainer.appendChild(leaveButton);
+    
+        modalContent.appendChild(buttonContainer);
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+    }
+    
+    function createButton(text, onClick) {
+        const button = document.createElement('button');
+        button.textContent = text;
+        Object.assign(button.style, {
+            padding: '10px 20px',
+            margin: '0 10px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+        });
+        button.addEventListener('click', onClick);
+        return button;
+    }
+    
+    function closeModal(modal) {
+        modal.style.display = 'none';
+        document.body.removeChild(modal);
     }
     
     

@@ -1,3 +1,4 @@
+let  mypokemons=[]
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
@@ -173,7 +174,7 @@ function animate() {
             rectangle1: player,
             rectangle2: boundary
         })) {
-            console.log("Colliding")
+            // console.log("Colliding")
         }
     })
 
@@ -205,7 +206,7 @@ function animate() {
 
                 battle.initiated = true
                 // cancel animation loop
-                audio.Map.stop()
+                audio.Map.pause()
                 audio.initBattle.play()
                 audio.battle.play()
                 window.cancelAnimationFrame(animateId)
@@ -251,7 +252,7 @@ function animate() {
                     }
                 }
             })) {
-                console.log("Colliding")
+                // console.log("Colliding")
                 moving = false
             }
 
@@ -375,7 +376,7 @@ window.addEventListener('keydown', (e) => {
         default:
             break;
     }
-    console.log(keys)
+    // console.log(keys)
 })
 
 window.addEventListener('keyup', (e) => {
@@ -404,3 +405,186 @@ window.addEventListener('keyup', (e) => {
     }
     // console.log(keys)
 })
+
+async function getPokemon(num) {
+    let a = await fetch('https://graphqlpokemon.favware.tech/v8', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            query: `
+    {
+        getPokemonByDexNumber(number: ${num}) {
+            species
+            sprite
+            backSprite
+            baseStats {
+                attack
+                defense
+                hp
+                specialattack
+                specialdefense
+                speed
+            }}}`
+        })
+    });
+    let json = await a.json();
+    let pokemone = json.data.getPokemonByDexNumber;
+    return pokemone;
+}
+
+async function get_mypoke(){
+    let a = await getPokemon(25);
+    mypokemons.push(a);
+    myPokemon=mypokemons[0]
+
+}
+
+
+async function getPokemon(num) {
+    let a = await fetch('https://graphqlpokemon.favware.tech/v8', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            query: `
+    {
+        getPokemonByDexNumber(number: ${num}) {
+            species
+            sprite
+            backSprite
+            baseStats {
+                attack
+                defense
+                hp
+                specialattack
+                specialdefense
+                speed
+            }}}`
+        })
+    });
+    let json = await a.json();
+    let pokemone = json.data.getPokemonByDexNumber;
+    return pokemone;
+}
+get_mypoke()
+
+let pokeball=document.querySelector("#pokeball")
+pokeball.addEventListener('click', () => {
+    console.log(mypokemons)
+    const modal = document.createElement('div');
+    Object.assign(modal.style, {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'fixed',
+        zIndex: '1000',
+        left: '0',
+        top: '0',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    });
+
+    const modalContent = document.createElement('div');
+    Object.assign(modalContent.style, {
+        backgroundColor: '#fff',
+        padding: '20px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        width: '80%',
+        maxHeight: '70%',
+        overflow: 'auto',
+        maxWidth: '650px',
+        position: 'relative',
+        textAlign: 'center',
+    });
+
+    const closeButton = document.createElement('span');
+    closeButton.innerHTML = '&times;';
+    Object.assign(closeButton.style, {
+        position: 'absolute',
+        top: '10px',
+        right: '20px',
+        color: '#aaa',
+        fontSize: '28px',
+        fontWeight: 'bold',
+        cursor: 'pointer',
+    });
+
+    closeButton.addEventListener('click', () => {
+        closeModal(modal);
+    });
+
+    const modalText = document.createElement('p');
+    modalText.textContent = 'Choose your Pokémon for next battle!';
+    Object.assign(modalText.style, {
+        marginBottom: '20px',
+        fontSize: '16px',
+        marginBottom:'45px',
+        fontWeight: 'bold',
+    });
+    modalContent.appendChild(modalText);
+
+    const cardContainer = document.createElement('div');
+    Object.assign(cardContainer.style, {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px',
+        flexWrap: 'wrap',
+        
+    });
+
+    mypokemons.forEach(element => {
+        const card = document.createElement('div');
+        Object.assign(card.style, {
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            padding: '10px',
+            fontSize: '14px',
+            cursor: 'pointer',
+            textAlign: 'center',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            transition: 'transform 0.2s',
+        });
+        card.classList.add('card');
+        card.innerHTML = `<div style="font-weight: bold; margin-bottom: 8px;">${element.species}</div>
+        <img src="${element.sprite}" alt="${element.species}" style="width: 100px; height: 100px;"/>`;
+
+        cardContainer.appendChild(card);
+
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'scale(1.05)';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'scale(1)';
+        });
+    });
+
+    modalContent.appendChild(closeButton);
+    modalContent.appendChild(cardContainer);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+
+    document.querySelectorAll('.card').forEach((card) => {
+        card.addEventListener('click', () => {
+            let cardname = (card.firstElementChild.innerHTML);
+            for (let i = 0; i < mypokemons.length; i++) {
+                const element = mypokemons[i];
+                if (element.species === cardname) {
+                    mypokemons.splice(i, 1);
+                    mypokemons.unshift(element);
+                    closeModal(modal);
+                    break;
+                }
+            }
+        });
+    });
+});
+
+function closeModal(modal) {
+    modal.style.display = 'none';
+    document.body.removeChild(modal);
+}
